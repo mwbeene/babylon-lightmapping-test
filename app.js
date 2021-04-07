@@ -13,14 +13,6 @@ const createScene = function () {
   const scene = new BABYLON.Scene( engine );
   scene.clearColor = new BABYLON.Color3( 0.0, 0.0, 0.0 );
 
-  // Rendering pipeline
-  var pipeline = new BABYLON.DefaultRenderingPipeline("default", true, scene);
-
-  // Tone mapping
-  scene.imageProcessingConfiguration.toneMappingEnabled = true;
-  scene.imageProcessingConfiguration.toneMappingType = BABYLON.ImageProcessingConfiguration.TONEMAPPING_ACES;
-  scene.imageProcessingConfiguration.exposure = 2.0;  
-
   // Camera
   var camera = new BABYLON.ArcRotateCamera( "Camera", 0, 0, 10, new BABYLON.Vector3( 0, 0, 0 ), scene );
   camera.lowerRadiusLimit = .1;
@@ -29,6 +21,16 @@ const createScene = function () {
   camera.wheelPrecision = 50;
   camera.minZ = 0.1
   camera.setPosition(new BABYLON.Vector3( -10, 1.5, 0 ));
+
+  // Rendering pipeline
+  var pipeline = new BABYLON.DefaultRenderingPipeline("default", true, scene);
+  pipeline.samples = 4;
+  pipeline.fxaaEnabled = true;
+
+  // Tone mapping
+  scene.imageProcessingConfiguration.toneMappingEnabled = true;
+  scene.imageProcessingConfiguration.toneMappingType = BABYLON.ImageProcessingConfiguration.TONEMAPPING_ACES;
+  scene.imageProcessingConfiguration.exposure = 2.0;  
 
   // Environment Lighting
   var envTexture = new BABYLON.CubeTexture("environments/environment.env", scene);
